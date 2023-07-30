@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Farmers and Tractor Owners Platform</title>
+    <!-- Link to a CSS file for styling -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Create a header with a logo and a navigation bar -->
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/farmers">Farmers</a></li>
+                <li><a href="/tractor_owners">Tractor Owners</a></li>
+                <li><a href="/match">Match</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Create a main section with a welcome message and a brief introduction -->
+    <main>
+        <div class="welcome">
+            <h1>Welcome to the Farmers and Tractor Owners Platform</h1>
+            <p>This platform will enable small scale farmers to be able to access tractors to cultivate their land without worrying about purchasing a tractor in Kenya.</p>
+            <p>It will also help tractor owners to find customers who need their services and earn income from their tractors.</p>
+        </div>
+        <!-- Create a form for adding a new farmer -->
+        <div class="form-farmer">
+            <h2>Add a new farmer</h2>
+            <form id="farmer-form" method="POST" action="/farmers">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+                <label for="land_size">Land size (in acres):</label>
+                <input type="number" id="land_size" name="land_size" required min="0.1" step="0.1">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <!-- Create a form for adding a new tractor owner -->
+        <div class="form-tractor-owner">
+            <h2>Add a new tractor owner</h2>
+            <form id="tractor-owner-form" method="POST" action="/tractor_owners">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+                <label for="tractor_type">Tractor type:</label>
+                <select id="tractor_type" name="tractor_type" required>
+                    <option value="">Select one</option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+                <button type="submit">Submit</button>                
+            </form>            
+        </div>        
+        <!-- Create a form for finding a suitable tractor owner for a farmer -->
+        <div class="form-match">
+            <h2>Find a suitable tractor owner for a farmer</h2>
+            <form id="match-form" method="POST" action="/match">
+                <label for="farmer_id">Farmer ID:</label>
+                <!-- Use a datalist element to provide suggestions from the existing farmers -->
+                <!-- The datalist element is populated by JavaScript using the /farmers endpoint -->
+                <!-- The user can also enter an ID manually -->
+                <!-- The input element has an autocomplete attribute to enable or disable the suggestions -->
+                <!-- The input element has a list attribute to link it to the datalist element -->
+                <!-- The datalist element has an id attribute that matches the list attribute of the input element -->
+                <!-- The datalist element has option elements as its children, each with a value attribute that represents the farmer ID -->
+                <!-- The option elements can also have text content that provides additional information about the farmer, such as name and location -->
+                <!-- For example: 
+                    <datalist id='farmers-list'>
+                        <option value='1'>John from Nairobi (1 acre)</option>
+                        <option value='2'>Mary from Mombasa (2 acres)</option>
+                        <option value='3'>Peter from Kisumu (3 acres)</option>
+                    </datalist>
+                -->
+                <input type="number" id="farmer_id" name="farmer_id" required min="1" autocomplete="on" list="farmers-list">
+                <datalist id="farmers-list"></datalist>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <!-- Create a div for displaying the results of the match -->
+        <div class="result-match">
+            <h2>Result of the match</h2>
+            <!-- Use a paragraph element to display the message from the /match endpoint -->
+            <!-- The paragraph element has an id attribute to be accessed by JavaScript -->
+            <!-- The paragraph element is initially hidden by CSS until a response is received from the /match endpoint -->
+            <!-- For example: 
+                <p id='match-message' hidden>No suitable tractor owner found</p>
+            -->
+            <p id="match-message" hidden></p>
+        </div>
+    </main>
+    <!-- Link to a JavaScript file for interactivity -->
+    <script src="script.js"></script>
+</body>
+</html>
+/* Use a universal selector to apply some basic styles to all elements */
+* {
+    /* Use a box-sizing property to include padding and border in the element's total width and height */
+    box-sizing: border-box;
+    /* Use a margin property to remove the default margins of the elements */
+    margin: 0;
+    /* Use a padding property to remove the default paddings of the elements */
+    padding: 0;
+}
+
+/* Use a header selector to style the header element */
+header {
+    /* Use a display property to arrange the header's children in a row */
+    display: flex;
+    /* Use an align-items property to align the header's children vertically */
+    align-items: center;
+    /* Use a justify-content property to distribute the header's children horizontally */
+    justify-content: space-between;
+    /* Use a background-color property to set the background color of the header */
+    background-color: #003366;
+    /* Use a color property to set the text color of the header */
+    color: white;
+}
+
+/* Use a logo selector to style the logo div */
+.logo {
+    /* Use a width property to set the width of the logo div */
+    width: 10%;
+    /* Use a height property to set the height of the logo div */
+    height: 100px;
+}
+
+/* Use an img selector to style the logo image */
+img {
+    /* Use a width property to set the width of the logo image */
+    width: 100%;
+    /* Use a height property to set the height of the logo image */
+    height: 100%;
+}
+
+/* Use a nav selector to style the navigation bar */
+nav {
+    /* Use a width property to set the width of the navigation bar */
+    width: 80%;
+}
+
+/* Use an ul selector to style the unordered list in the navigation bar */
+ul {
+    /* Use a display property to arrange the list items in a row */
+    display: flex;
+    /* Use an align-items property to align the list items vertically */
+    align-items: center;
+    /* Use a justify-content property to distribute the list items horizontally */
+    justify-content: space-evenly;
+}
+
+/* Use an li selector to style the list items in the navigation bar */
+li {
+    /* Use a list-style-type property to remove the default bullets of the list items */
+    list-style-type: none;
+}
+
+/* Use an a selector to style the links in the navigation bar */
+a {
+    /* Use a text-decoration property to remove the default underline of the links */
+    text-decoration: none;
+    /* Use a color property to set the text color of the links */
+    color: white;
+}
+
+/* Use an :hover pseudo-class selector to change the appearance of the links when hovered over by the mouse cursor */
+a:hover {
+    /* Use a font-weight property to make the text of the links bold when hovered over by the mouse cursor */
+    font-weight: bold;
+}
+
+/* Use a main selector to style the main section */
+main {
+    /* Use a display property to arrange the main section's children in columns */
+    display: flex;
+    /* Use a flex-direction property to change the direction of the main section's children from row (default) to column */
+    flex-direction: column;
+}
+
+/* Use a welcome selector to style the welcome div */
+.welcome {
+    /* Use a text-align property to center-align the text in the welcome div */
+    text-align: center;
+}
+
+/* Use an h1 selector to style the first level heading in the welcome div */
+h1 {
+    /* Use a font-size property to set the font size of the first level heading in pixels (px) */
+    font-size: 
